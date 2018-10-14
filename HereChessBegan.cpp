@@ -1,0 +1,1112 @@
+/*
+	author: Prof. Ashikur rahman
+	last modified: April 29, 2017
+*/
+
+#define _CRT_SECURE_NO_WARNINGS
+#include "iGraphics.h"
+#include "initializations.h"
+#include "blitz.h"
+#include "artificial_hypocrisy.h"
+#include<windows.h>
+//#include "texture.h"
+//#include "TextureList.h"
+
+//#include "rook_001.h"
+
+/*
+	function iDraw() is called again and again by the system.
+	*/
+
+/*
+
+MODE::
+
+11.MENU //DEFAULT
+111. MENU2
+21. NEW GAME
+31. RESUME
+41. INSTRUCTIONS
+51.BLITZ
+
+*/
+
+/*
+    kothaThekeElo 1 -->>  from newgame
+    kothaThekeElo 2-->>  from resume
+*/
+
+int kothaThekeElo=1;
+
+int MODE=11;
+int newMODE=11;
+
+int iDrawNumber,iMove;
+
+void iDraw()
+{
+    //place your drawing codes here
+    iClear();
+    iSetColor(0,200,200);
+    //printf("MODE is %d\n",MODE);
+    if(SecondsTraversed<2)
+    {
+        iShowBMP(0,0,"opening.bmp");
+        return;
+    }
+
+    if(newMODE==11)
+    {
+        iShowBMP(0,0,"menu.bmp");
+        //printf("MENUUUUUUUUUUUUUUUUUUU");
+        //iFilledRectangle(585,470,320,75);
+        //iFilledRectangle(605,345,280,75);
+        //iFilledRectangle(550,230,420,80);
+        //iShowBMP(0,0,"1001.bmp");
+        return;
+    }
+
+    if(newMODE==111)
+    {
+        iShowBMP(0,0,"menu2.bmp");
+        printf("MENUUUUUUUUUUUUUUUUUUU");
+        //iFilledRectangle(665,485,230,90);
+        //iFilledRectangle(665,345,220,90);
+        //iFilledRectangle(610,200,330,90);
+        //iShowBMP(0,0,"1001.bmp");
+        return;
+    }
+
+    if(newMODE==21)
+    {
+        //moveforhypocrisy = 0;
+
+        iShowBMP(0,0,"General_back.bmp");
+        //iShowBMP(100,100,"erty.bmp");
+        iRectangle(340,20,740,740);
+        //iSetColor();
+        iRectangle(350,30,720,720);
+
+        /*   if(SecondsTraversed<=1)
+               init();*/
+
+        // iSetColor(255,0,0);
+        //printf("\nSomething : %d \n",max(2,5));
+        //printf("\niMove: %5d iDraw:	%5d mode: %5d des_x: %d des_x-final: %d %d %d\n",iMove,iDrawNumber++,MODE,des_x,des_x_final,des_y,des_y_final);
+
+        for(int i=350; i<1000; i+=90)
+        {
+            int chessboxwhiteorblack=i%4;
+            for(int j=30; j<700; j+=90)
+            {
+                int checkboxwhiteorblack=j%4+chessboxwhiteorblack;
+                if(checkboxwhiteorblack%4 == 2)
+                {
+                    iSetColor(182, 155, 76);
+                    iFilledRectangle(i,j,90,90);
+                }
+                else
+                {
+                    iSetColor(120,72,1);
+                    iFilledRectangle(i,j,90,90);
+                }
+            }
+        }
+        //iShowBMP(500,400,"25.bmp");
+        //drawTexture(500,300,var);
+
+        //printf("Outta loop:	%d %d %d\n",des_x,des_y,occupy[0][7]);
+        if(player_mode==1)
+        {
+            switch(occupy[des_x][des_y])
+            {
+            case 10:
+                whiteKingMoveShow();
+                break;
+            case 12:
+                whiteRookMoveShow();
+                break;
+            case 13:
+                whiteBishopMoveShow();
+                break;
+            case 11:
+                whiteMinisterMoveShow();
+                break;
+            case 14:
+                whiteKnightMoveShow();
+                break;
+            case 15:
+                whitePawnMoveShow();
+                break;
+            }
+        }
+        if(player_mode==2)
+        {
+            switch(occupy[des_x][des_y])
+            {
+            case 20:
+                blackKingMoveShow();
+                break;
+            case 22:
+                blackRookMoveShow();
+                break;
+            case 23:
+                blackBishopMoveShow();
+                break;
+            case 21:
+                blackMinisterMoveShow();
+                break;
+            case 24:
+                blackKnightMoveShow();
+                break;
+            case 25:
+                blackPawnMoveShow();
+                break;
+            }
+        }
+        if(MODE==25)
+        {
+            if(player_mode==1)
+            {
+                int qq=0;
+                if(!(des_x == des_x_final && des_y == des_y_final)){
+			    switch(occupy[des_x][des_y])
+			    {
+			    case 10:
+				  qq=whiteKingMoveHappen();
+				  break;
+			    case 12:
+				  qq=whiteRookMoveHappen();
+				  break;
+			    case 13:
+				  qq=whiteBishopMoveHappen();
+				  break;
+			    case 11:
+				  qq=whiteMinisterMoveHappen();
+				  break;
+			    case 14:
+				  qq=whiteKnightMoveHappen();
+				  break;
+			    case 15:
+				  qq=whitePawnMoveHappen();
+				  break;
+			    }
+                }
+                if(qq)
+                {
+                    player_mode=2;
+                    ++givenMovesOfWhite;
+                }
+                if(qq && moveforhypocrisy)
+                {
+                    FILE *fff = fopen("debigging.txt","w+");
+                    printf("\n S O S 1 ");
+                    artificialHypocrisy();
+                    printf("\n S O S 2 ");
+                    if(letsmove.empty() && blackKingInCheck())
+                    {
+                        iShowBMP(0,0,"white_wins.bmp");
+                        return;
+                    }
+                    printf("\n S O S 3 ");
+                    for(auto zxc:letsmove)
+                    {
+                        fprintf(fff,"%4d%4d%4d%4d%4d%4d\n",zxc.from_x,zxc.from_y,zxc.to_x,zxc.to_y,zxc.self,zxc.dev);
+                    }
+                    printf("\n S O S 4 ");
+                    fprintf(fff,"\n%d\n\n",player_mode);
+                    fclose(fff);
+                    printf("\n S O S 5 ");
+                    //if(letsmove.empty())     iShowBMP(0,0,"white_wins.bmp");
+                    if(letsmove[0].dev == 0 && letsmove[0].is_check == 0)
+                    {
+                        swap(letsmove[0],letsmove[rand() % letsmove.size()]);
+                    }
+                    printf("\n S O S 6 ");
+                    des_x = letsmove[0].from_x;
+                    des_y = letsmove[0].from_y;
+                    des_x_final = letsmove[0].to_x;
+                    des_y_final = letsmove[0].to_y;
+                    iDelay(1);
+                    qq=0;
+                    switch(occupy[des_x][des_y])
+                    {
+                    case 20:
+                        if(letsmove[0].dev)
+                            blackKingOccupy[des_x_final][des_y_final]=8;
+                        else
+                            blackKingOccupy[des_x_final][des_y_final]=6;
+                        qq=blackKingMoveHappen();
+                        break;
+                    case 22:
+                        if(letsmove[0].dev)
+                            blackRookOccupy[des_x_final][des_y_final]=8;
+                        else
+                            blackRookOccupy[des_x_final][des_y_final]=6;
+                        qq=blackRookMoveHappen();
+                        break;
+                    case 23:
+                        if(letsmove[0].dev)
+                            blackBishopOccupy[des_x_final][des_y_final]=8;
+                        else
+                            blackBishopOccupy[des_x_final][des_y_final]=6;
+                        qq=blackBishopMoveHappen();
+                        break;
+                    case 21:
+                        if(letsmove[0].dev)
+                            blackMinisterOccupy[des_x_final][des_y_final]=8;
+                        else
+                            blackMinisterOccupy[des_x_final][des_y_final]=6;
+                        qq=blackMinisterMoveHappen();
+                        break;
+                    case 24:
+                        if(letsmove[0].dev)
+                            blackKnightOccupy[des_x_final][des_y_final]=8;
+                        else
+                            blackKnightOccupy[des_x_final][des_y_final]=6;
+                        qq=blackKnightMoveHappen();
+                        break;
+                    case 25:
+                        if(letsmove[0].dev)
+                            blackPawnOccupy[des_x_final][des_y_final]=8;
+                        else
+                            blackPawnOccupy[des_x_final][des_y_final]=6;
+                        qq=blackPawnMoveHappen();
+                        break;
+                    }
+                    if(qq)
+                    {
+                        player_mode=1;
+                        ++givenMovesOfBlack;
+                    }
+                }
+            }
+            else if(player_mode==2)
+            {
+                int qq=0;
+                switch(occupy[des_x][des_y])
+                {
+                case 20:
+                    qq=blackKingMoveHappen();
+                    break;
+                case 22:
+                    qq=blackRookMoveHappen();
+                    break;
+                case 23:
+                    qq=blackBishopMoveHappen();
+                    break;
+                case 21:
+                    qq=blackMinisterMoveHappen();
+                    break;
+                case 24:
+                    qq=blackKnightMoveHappen();
+                    break;
+                case 25:
+                    qq=blackPawnMoveHappen();
+                    break;
+                }
+                if(qq)
+                {
+                    player_mode=1;
+                    ++givenMovesOfBlack;
+                }
+            }
+            iWhiteMoves = whiteMoveCounter();
+            iBlackMoves = blackMoveCounter();
+            printf("\n\nWAITING FOR A BLUNDER:   \nWHITE:\t%d\tBLACK:\t%d\n\n",iWhiteMoves,iBlackMoves);
+            MODE=0;
+            printf("Chessboard\n\n");
+            for(int ii=7; ii>-1; --ii)
+            {
+                for(int ij=0; ij<8; ++ij)
+                {
+                    printf("%d\t",occupy[ij][ii]);
+                    //tempShowbyString(ii,ij);
+                }
+                printf("\n\n");
+            }
+        }
+        //printf("Chessboard\n\n");
+        for(int ii=7; ii>-1; --ii)
+        {
+            for(int ij=0; ij<8; ++ij)
+            {
+                //printf("%d\t",occupy[ij][ii]);
+                tempShowbyString(ii,ij);
+            }
+            //printf("\n\n");
+        }
+
+        iSetColor(255,0,0);
+
+        if(player_mode==1)
+        {
+            //iText(1120,395,"TURN FOR WHITE",GLUT_BITMAP_TIMES_ROMAN_24);
+            iShowBMP(1125,380,"turnwhite.bmp");
+        }
+        else if(player_mode==2)
+        {
+            //iText(1120,395,"TURN FOR BLACK",GLUT_BITMAP_TIMES_ROMAN_24);
+            iShowBMP(1125,380,"turnblack.bmp");
+        }
+
+        iSetColor(255,235,255);
+        if(whiteKingInCheck())
+        {
+            //iText(100,500,"White King in Check",GLUT_BITMAP_TIMES_ROMAN_24);
+            iShowBMP(1155,180,"whitecheck.bmp");
+            printf("\n\a\a\a\a\n");
+        }
+        if(blackKingInCheck())
+        {
+            //iText(100,700,"Black King in Check",GLUT_BITMAP_TIMES_ROMAN_24);
+            iShowBMP(1155,500,"blackcheck.bmp");
+            printf("\n\a\a\a\a\n");
+        }
+
+        if(iWhiteMoves==0 && givenMovesOfBlack && whiteKingInCheck())
+        {
+            iText(100,400,"BLACK WINS");
+            int time=11e2;
+            while(time--)
+                printf("a");
+            iShowBMP(0,0,"black_wins.bmp");
+        }
+        else if(iBlackMoves==0 && givenMovesOfWhite && blackKingInCheck())
+        {
+            iText(100,300,"WHITE WINS");
+            int time=5e2;
+            while(time--)
+                printf("a"),    iText(100,350,"Checkmate !!! WHITE WINS");
+            iShowBMP(0,0,"white_wins.bmp");
+        }
+        else if(((iWhiteMoves==0 && !whiteKingInCheck()) || (iBlackMoves==0 && !blackKingInCheck())) && givenMovesOfBlack && givenMovesOfWhite)
+        {
+            iText(100,350,"STALEMATE DRAW");
+        }
+
+    }
+
+    if(newMODE==51)
+    {
+        moveforhypocrisy = 0;
+
+        iShowBMP(0,0,"General_back.bmp");
+        //iShowBMP(100,100,"erty.bmp");
+        iRectangle(340,20,740,740);
+        //iSetColor();
+        iRectangle(350,30,720,720);
+
+        /*   if(SecondsTraversed<=1)
+               init();*/
+
+        // iSetColor(255,0,0);
+        //printf("\nSomething : %d \n",max(2,5));
+        //printf("\niMove: %5d iDraw:	%5d mode: %5d des_x: %d des_x-final: %d %d %d\n",iMove,iDrawNumber++,MODE,des_x,des_x_final,des_y,des_y_final);
+
+        for(int i=350; i<1000; i+=90)
+        {
+            int chessboxwhiteorblack=i%4;
+            for(int j=30; j<700; j+=90)
+            {
+                int checkboxwhiteorblack=j%4+chessboxwhiteorblack;
+                if(checkboxwhiteorblack%4 == 2)
+                {
+                    iSetColor(182, 155, 76);
+                    iFilledRectangle(i,j,90,90);
+                }
+                else
+                {
+                    iSetColor(120,72,1);
+                    iFilledRectangle(i,j,90,90);
+                }
+            }
+        }
+        //iShowBMP(500,400,"25.bmp");
+        //drawTexture(500,300,var);
+
+        //printf("Outta loop:	%d %d %d\n",des_x,des_y,occupy[0][7]);
+        if(player_mode==1)
+        {
+            switch(occupy[des_x][des_y])
+            {
+            case 10:
+                whiteKingMoveShow();
+                break;
+            case 12:
+                whiteRookMoveShow();
+                break;
+            case 13:
+                whiteBishopMoveShow();
+                break;
+            case 11:
+                whiteMinisterMoveShow();
+                break;
+            case 14:
+                whiteKnightMoveShow();
+                break;
+            case 15:
+                whitePawnMoveShow();
+                break;
+            }
+        }
+        if(player_mode==2)
+        {
+            switch(occupy[des_x][des_y])
+            {
+            case 20:
+                blackKingMoveShow();
+                break;
+            case 22:
+                blackRookMoveShow();
+                break;
+            case 23:
+                blackBishopMoveShow();
+                break;
+            case 21:
+                blackMinisterMoveShow();
+                break;
+            case 24:
+                blackKnightMoveShow();
+                break;
+            case 25:
+                blackPawnMoveShow();
+                break;
+            }
+        }
+        if(MODE==25)
+        {
+            if(player_mode==1)
+            {
+                int qq=0;
+                switch(occupy[des_x][des_y])
+                {
+                case 10:
+                    qq=whiteKingMoveHappen();
+                    break;
+                case 12:
+                    qq=whiteRookMoveHappen();
+                    break;
+                case 13:
+                    qq=whiteBishopMoveHappen();
+                    break;
+                case 11:
+                    qq=whiteMinisterMoveHappen();
+                    break;
+                case 14:
+                    qq=whiteKnightMoveHappen();
+                    break;
+                case 15:
+                    qq=whitePawnMoveHappen();
+                    break;
+                }
+                if(qq)
+                {
+                    player_mode=2;
+                    ++givenMovesOfWhite;
+                    iPauseTimer(1);
+                    iResumeTimer(2);
+                }
+                if(moveforhypocrisy)
+                {
+                    FILE *fff = fopen("debigging.txt","w+");
+                    printf("\n S O S 1 ");
+                    artificialHypocrisy();
+                    printf("\n S O S 2 ");
+                    if(letsmove.empty() && blackKingInCheck())
+                    {
+                        iShowBMP(0,0,"white_wins.bmp");
+                        return;
+                    }
+                    printf("\n S O S 3 ");
+                    for(auto zxc:letsmove)
+                    {
+                        fprintf(fff,"%4d%4d%4d%4d%4d%4d\n",zxc.from_x,zxc.from_y,zxc.to_x,zxc.to_y,zxc.self,zxc.dev);
+                    }
+                    printf("\n S O S 4 ");
+                    fprintf(fff,"\n%d\n\n",player_mode);
+                    fclose(fff);
+                    printf("\n S O S 5 ");
+                    //if(letsmove.empty())     iShowBMP(0,0,"white_wins.bmp");
+                    if(letsmove[0].dev == 0 && letsmove[0].is_check == 0)
+                    {
+                        swap(letsmove[0],letsmove[rand() % letsmove.size()]);
+                    }
+                    printf("\n S O S 6 ");
+                    des_x = letsmove[0].from_x;
+                    des_y = letsmove[0].from_y;
+                    des_x_final = letsmove[0].to_x;
+                    des_y_final = letsmove[0].to_y;
+                    iDelay(2);
+                    qq=0;
+                    switch(occupy[des_x][des_y])
+                    {
+                    case 20:
+                        if(letsmove[0].dev)
+                            blackKingOccupy[des_x_final][des_y_final]=8;
+                        else
+                            blackKingOccupy[des_x_final][des_y_final]=6;
+                        qq=blackKingMoveHappen();
+                        break;
+                    case 22:
+                        if(letsmove[0].dev)
+                            blackRookOccupy[des_x_final][des_y_final]=8;
+                        else
+                            blackRookOccupy[des_x_final][des_y_final]=6;
+                        qq=blackRookMoveHappen();
+                        break;
+                    case 23:
+                        if(letsmove[0].dev)
+                            blackBishopOccupy[des_x_final][des_y_final]=8;
+                        else
+                            blackBishopOccupy[des_x_final][des_y_final]=6;
+                        qq=blackBishopMoveHappen();
+                        break;
+                    case 21:
+                        if(letsmove[0].dev)
+                            blackMinisterOccupy[des_x_final][des_y_final]=8;
+                        else
+                            blackMinisterOccupy[des_x_final][des_y_final]=6;
+                        qq=blackMinisterMoveHappen();
+                        break;
+                    case 24:
+                        if(letsmove[0].dev)
+                            blackKnightOccupy[des_x_final][des_y_final]=8;
+                        else
+                            blackKnightOccupy[des_x_final][des_y_final]=6;
+                        qq=blackKnightMoveHappen();
+                        break;
+                    case 25:
+                        if(letsmove[0].dev)
+                            blackPawnOccupy[des_x_final][des_y_final]=8;
+                        else
+                            blackPawnOccupy[des_x_final][des_y_final]=6;
+                        qq=blackPawnMoveHappen();
+                        break;
+                    }
+                    if(qq)
+                    {
+                        player_mode=1;
+                        ++givenMovesOfBlack;
+                    }
+                }
+            }
+            else if(player_mode==2)
+            {
+                int qq=0;
+                switch(occupy[des_x][des_y])
+                {
+                case 20:
+                    qq=blackKingMoveHappen();
+                    break;
+                case 22:
+                    qq=blackRookMoveHappen();
+                    break;
+                case 23:
+                    qq=blackBishopMoveHappen();
+                    break;
+                case 21:
+                    qq=blackMinisterMoveHappen();
+                    break;
+                case 24:
+                    qq=blackKnightMoveHappen();
+                    break;
+                case 25:
+                    qq=blackPawnMoveHappen();
+                    break;
+                }
+                if(qq)
+                {
+                    player_mode=1;
+                    ++givenMovesOfBlack;
+                    iResumeTimer(1);
+                    iPauseTimer(2);
+                }
+            }
+            iWhiteMoves = whiteMoveCounter();
+            iBlackMoves = blackMoveCounter();
+            printf("\n\nWAITING FOR A BLUNDER:   \nWHITE:\t%d\tBLACK:\t%d\n\n",iWhiteMoves,iBlackMoves);
+            MODE=0;
+            printf("Chessboard\n\n");
+            for(int ii=7; ii>-1; --ii)
+            {
+                for(int ij=0; ij<8; ++ij)
+                {
+                    printf("%d\t",occupy[ij][ii]);
+                    //tempShowbyString(ii,ij);
+                }
+                printf("\n\n");
+            }
+        }
+        //printf("Chessboard\n\n");
+        for(int ii=7; ii>-1; --ii)
+        {
+            for(int ij=0; ij<8; ++ij)
+            {
+                //printf("%d\t",occupy[ij][ii]);
+                tempShowbyString(ii,ij);
+            }
+            //printf("\n\n");
+        }
+
+        iSetColor(255,0,0);
+
+        if(player_mode==1)
+        {
+            //iText(1120,395,"TURN FOR WHITE",GLUT_BITMAP_TIMES_ROMAN_24);
+            iShowBMP(1125,380,"turnwhite.bmp");
+        }
+        else if(player_mode==2)
+        {
+            //iText(1120,395,"TURN FOR BLACK",GLUT_BITMAP_TIMES_ROMAN_24);
+            iShowBMP(1125,380,"turnblack.bmp");
+        }
+
+        iSetColor(255,235,255);
+        if(whiteKingInCheck())
+        {
+            //iText(100,500,"White King in Check",GLUT_BITMAP_TIMES_ROMAN_24);
+            iShowBMP(1155,180,"whitecheck.bmp");
+            printf("\n\a\a\a\a\n");
+        }
+        if(blackKingInCheck())
+        {
+            //iText(100,700,"Black King in Check",GLUT_BITMAP_TIMES_ROMAN_24);
+            iShowBMP(1155,500,"blackcheck.bmp");
+            printf("\n\a\a\a\a\n");
+        }
+
+
+        // TIME FOR PLAYER 1
+        //iSetColor(66, 203, 244);
+        iSetColor(0,0,0);
+        iFilledRectangle(20,30,150,150);
+        iSetColor(255,255,255);
+        iFilledRectangle(150,30,150,150);
+
+        char temp1[10];
+        sprintf(temp1, "%d", minute_player1);
+
+        iSetColor(255,255,255);
+        dekhano(temp1,x1,y1);
+
+        // printf("%d\t%d\n",minute,sec);
+
+        char temp2[10];
+        sprintf(temp2, "%d", sec_player1);
+
+        iSetColor(0,0,0);
+        //iText(50,100,temp1, GLUT_BITMAP_TIMES_ROMAN_24);
+        //iText(150,100,temp2, GLUT_BITMAP_TIMES_ROMAN_24);
+        dekhano2(temp2,x2,y1);
+
+        iSetColor(255,255,255);
+        iFilledRectangle(140,115,10,10);
+        iFilledRectangle(140,80,10,10);
+
+        iSetColor(0,0,0);
+        iFilledRectangle(150,115,10,10);
+        iFilledRectangle(150,80,10,10);
+
+        // TIME FOR PLAYER 2
+        iSetColor(0,0,0);
+        iFilledRectangle(20,550,150,150);
+        iSetColor(255,255,255);
+        iFilledRectangle(150,550,150,150);
+
+        // printf("%d\t%d\n",minute,sec);
+        char temp3[10];
+        sprintf(temp3, "%d", minute_player2);
+
+        char temp4[10];
+        sprintf(temp4, "%d", sec_player2);
+        //iText(50,100,temp1, GLUT_BITMAP_TIMES_ROMAN_24);
+        iSetColor(255,255,255);
+        dekhano(temp3,x1,y2);
+
+        //iText(150,100,temp2, GLUT_BITMAP_TIMES_ROMAN_24);
+        iSetColor(0,0,0);
+        dekhano2(temp4,x2,y2);
+
+        iSetColor(255,255,255);
+        iFilledRectangle(140,600,10,10);
+        iFilledRectangle(140,635,10,10);
+
+        iSetColor(0,0,0);
+        iFilledRectangle(150,600,10,10);
+        iFilledRectangle(150,635,10,10);
+
+        if((iWhiteMoves==0 && givenMovesOfBlack && whiteKingInCheck()) || (t_sec_player1 <= 0))
+        {
+            iText(100,400,"BLACK WINS");
+            int time=11e2;
+            while(time--)
+                printf("a");
+            iShowBMP(0,0,"black_wins.bmp");
+            return;
+        }
+        else if((iBlackMoves==0 && givenMovesOfWhite && blackKingInCheck()) || (t_sec_player2 <= 0))
+        {
+            iText(100,300,"WHITE WINS");
+            int time=5e2;
+            while(time--)
+                printf("a"),    iText(100,350,"Checkmate !!! WHITE WINS");
+            iShowBMP(0,0,"white_wins.bmp");
+            return;
+        }
+        else if(((iWhiteMoves==0 && !whiteKingInCheck()) || (iBlackMoves==0 && !blackKingInCheck())) && givenMovesOfBlack && givenMovesOfWhite)
+        {
+            iText(100,350,"STALEMATE DRAW");
+        }
+    }
+
+    if(newMODE==31)
+    {
+        iShowBMP(0,0,"menu2.bmp");
+        //printf("MENUUUUUUUUUUUUUUUUUUU");
+        printf("kotha theke elo %d\n",kothaThekeElo);
+        //iFilledRectangle(665,485,230,90);
+        //iFilledRectangle(665,345,220,90);
+        //iFilledRectangle(610,200,330,90);
+        //iShowBMP(0,0,"1001.bmp");
+        return;
+    }
+
+    /*
+    if(newMODE==31)
+    {
+        //RESUME
+        init();
+        init_saved();
+        newMODE=21;
+        printf("Chessboard\n\n");
+        for(int ii=7; ii>-1; --ii)
+        {
+            for(int ij=0; ij<8; ++ij)
+            {
+                printf("%d\t",occupy[ij][ii]);
+                //tempShowbyString(ii,ij);
+            }
+            printf("\n\n");
+        }
+    }*/
+
+    if(newMODE==41)
+    {
+        //INSTRUCTIONS
+        iShowBMP(0,0,"instruct.bmp");
+    }
+
+    iSetColor(255,0,0);
+    iShowBMP(10,740,"menubar.bmp");
+
+       //iShowBMP(60,210,"turn_for_white.bmp");
+}
+/*
+	function iMouseMove() is called when the user presses and drags the mouse.
+	(mx, my) is the position where the mouse pointer is.
+	*/
+void iMouseMove(int mx, int my)
+{
+    //place your codes here
+}
+
+/*
+	function iMouse() is called when the user presses/releases the mouse.
+	(mx, my) is the position where the mouse pointer is.
+	*/
+void iMouse(int button, int state, int mx, int my)
+{
+    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+    {
+        //int temp_MODE;
+
+        if(newMODE==11)
+        {
+            if(mx >= 585 && mx <= 905 && my >= 470 && my <= 545)
+                newMODE=111;
+            else if(mx >= 605 && mx <= 885 && my >= 345 && my <= 420)
+                newMODE=31,kothaThekeElo=2;
+            else if(mx >= 550 && mx <= 970 && my >= 230 && my <= 310)
+                newMODE=41;
+
+                return;
+
+        }
+
+        if(newMODE==111)
+        {
+            if(mx >= 665 && mx <= 895 && my >= 485 && my <= 575 && kothaThekeElo==1)
+            {
+                moveforhypocrisy = 1;
+                newMODE=21;
+                init();
+
+            }
+            else if(mx >= 665 && mx <= 885 && my >= 345 && my <= 435 && kothaThekeElo==1)
+            {
+                newMODE=21;
+                //SecondsTraversed=0;
+                //player_mode = rand();
+                //printf("P Mode: %d\n",player_mode);
+                //player_mode %= 2 + 1;
+                player_mode=1;
+                init();
+                //temp_MODE=21;
+                printf("NEW GAMEEEEEEEEE\n");
+                // DELETE THIS LATER
+                //if(mx>730)      moveforhypocrisy = 1;
+                //else                     moveforhypocrisy = 0;
+                //UPTO THIS
+            }
+            else if(mx >= 610 && mx <= 940 && my >= 200 && my <= 290 && kothaThekeElo==1)
+            {
+                newMODE=51;
+                //SecondsTraversed=0;
+                //player_mode = rand();
+                //printf("P Mode: %d\n",player_mode);
+                //player_mode %= 2 + 1;
+                player_mode=1;
+                init();
+                //temp_MODE=21;
+                printf("NEW GAMEEEEEEEEE\n");
+                // DELETE THIS LATER
+                //if(mx>730)      moveforhypocrisy = 1;
+                //else                     moveforhypocrisy = 0;
+                //UPTO THIS
+
+            }
+        }
+
+
+
+        if(newMODE==31)
+        {
+
+            if(mx >= 665 && mx <= 895 && my >= 485 && my <= 575 && kothaThekeElo==2)
+            {
+                init_hypo();
+                moveforhypocrisy=1;
+                newMODE=21;
+            }
+            else if(mx >= 665 && mx <= 885 && my >= 345 && my <= 435 && kothaThekeElo==2)
+            {
+                init_saved();
+                moveforhypocrisy=0;
+                newMODE=21;
+
+            }
+            else if(mx >= 610 && mx <= 940 && my >= 200 && my <= 290 && kothaThekeElo==2)
+            {
+                init_saved_blitz();
+                 moveforhypocrisy=0;
+                newMODE=51;
+            }
+        }
+
+        des_x = (mx - 350)/90;
+        des_y = (my -   30)/90;
+        MODE=2;
+    }
+    if (button == GLUT_RIGHT_BUTTON /*&& state == GLUT_DOWN*/ && MODE==2)
+    {
+        //place your codes here
+        MODE=25;
+        des_x_final = (mx - 350)/90;
+        des_y_final = (my - 30)/90;
+
+        /*if(des_x != des_x_final || des_y!=des_y_final)
+            player_mode = (player_mode%2)+1;*/
+    }
+
+    if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && mx<113 && my>740)
+    {
+		for(int Q=0;Q<100;++Q)	printf("\t\t\t\tBos taurus\n");
+		if(newMODE == 51){
+			printf("\t\t\t\t\tBos indicus\n");
+			iKeyboard('b');
+		}
+		else if(moveforhypocrisy){
+			printf("Hey, hypocrite!!!");
+			iKeyboard('h');
+		}
+		else{
+			iKeyboard('p');
+		}
+		iKeyboard('q');
+    }
+}
+
+/*
+	function iKeyboard() is called whenever the user hits a key in keyboard.
+	key- holds the ASCII value of the key pressed.
+	*/
+void iKeyboard(unsigned char key)
+{
+    if (key == 'x')
+    {
+        //do something with 'x'
+        FILE *fp1;
+        fp1 = fopen("saved_game.txt","w+");
+        for(int ii=7; ii>-1; --ii)
+        {
+            for(int ij=0; ij<8; ++ij)
+                fprintf(fp1,"%d\t",occupy[ij][ii]);
+            fprintf(fp1,"\n");
+        }
+        fprintf(fp1,"%d %d\n",player_mode,moveforhypocrisy);
+        fclose(fp1);
+        iDraw();
+        exit(0);
+    }
+    else if (key == 's')
+    {
+        //do something with 'x'
+        FILE *fp1 = fopen("saved_game.txt","w+");
+        for(int ii=7; ii>-1; --ii)
+        {
+            for(int ij=0; ij<8; ++ij)
+                fprintf(fp1,"%d\t",occupy[ij][ii]);
+            fprintf(fp1,"\n");
+        }
+        fprintf(fp1,"%d %d\n",player_mode,moveforhypocrisy);
+        fclose(fp1);
+        iDraw();
+        //exit(0);
+    }
+    else if (key == 'p')
+    {
+        //do something with 'x'
+        FILE *fp1 = fopen("saved_game.txt","w+");
+        for(int ii=7; ii>-1; --ii)
+        {
+            for(int ij=0; ij<8; ++ij)
+                fprintf(fp1,"%d\t",occupy[ij][ii]);
+            fprintf(fp1,"\n");
+        }
+        fprintf(fp1,"%d %d\n",player_mode,moveforhypocrisy);
+        fclose(fp1);
+        newMODE=11;
+        iDraw();
+        //exit(0);
+    }
+    else if(key == 'n')
+    {
+        init_saved();
+        //iDraw();
+    }
+    else if(key=='q')
+    {
+        newMODE=11;
+        kothaThekeElo=1;
+        moveforhypocrisy = 0;
+    }
+    else if(key=='b')
+    {
+        FILE *fp1 = fopen("saved_blitz.txt","w+");
+        iPauseTimer(1);
+        iPauseTimer(2);
+        for(int ii=7; ii>-1; --ii)
+        {
+            for(int ij=0; ij<8; ++ij)
+                fprintf(fp1,"%d\t",occupy[ij][ii]);
+            fprintf(fp1,"\n");
+        }
+        fprintf(fp1,"%d %d\n",player_mode,moveforhypocrisy);
+        fprintf(fp1,"%d %d",t_sec_player1,t_sec_player2);
+        fclose(fp1);
+        iDraw();
+    }
+    else if(key=='h')
+    {
+        FILE *fp1 = fopen("saved_hypo.txt","w+");
+        for(int ii=7; ii>-1; --ii)
+        {
+            for(int ij=0; ij<8; ++ij)
+                fprintf(fp1,"%d\t",occupy[ij][ii]);
+            fprintf(fp1,"\n");
+        }
+        fprintf(fp1,"%d %d\n",player_mode,moveforhypocrisy);
+        fclose(fp1);
+        iDraw();
+    }
+    //place your codes for other keys here
+}
+
+/*
+	function iSpecialKeyboard() is called whenver user hits special keys like-
+	function keys, home, end, pg up, pg down, arraows etc. you have to use
+	appropriate constants to detect them. A list is:
+	GLUT_KEY_F1, GLUT_KEY_F2, GLUT_KEY_F3, GLUT_KEY_F4, GLUT_KEY_F5, GLUT_KEY_F6,
+	GLUT_KEY_F7, GLUT_KEY_F8, GLUT_KEY_F9, GLUT_KEY_F10, GLUT_KEY_F11, GLUT_KEY_F12,
+	GLUT_KEY_LEFT, GLUT_KEY_UP, GLUT_KEY_RIGHT, GLUT_KEY_DOWN, GLUT_KEY_PAGE UP,
+	GLUT_KEY_PAGE DOWN, GLUT_KEY_HOME, GLUT_KEY_END, GLUT_KEY_INSERT
+*/
+
+void iSpecialKeyboard(unsigned char key)
+{
+
+    if (key == GLUT_KEY_END)
+    {
+        exit(0);
+    }
+    if (key == GLUT_KEY_LEFT)
+    {
+        pic_x--;
+    }
+    if (key == GLUT_KEY_RIGHT)
+    {
+        pic_x++;
+    }
+    if (key == GLUT_KEY_UP)
+    {
+        pic_y++;
+    }
+    if (key == GLUT_KEY_DOWN)
+    {
+        pic_y--;
+    }
+    //place your codes for other keys here
+}
+
+void second_counter(void)
+{
+    ++SecondsTraversed;
+
+}
+
+void komche_player1()
+{
+    t_sec_player1--;
+    minute_player1=t_sec_player1/60;
+    sec_player1=t_sec_player1%60;
+}
+
+void komche_player2()
+{
+    t_sec_player2--;
+    minute_player2=t_sec_player2/60;
+    sec_player2=t_sec_player2%60;
+}
+
+int main()
+{
+    //place your own initialization codes here.
+
+    //PlaySound(TEXT("chess.wav"),NULL,SND_LOOP|SND_ASYNC);
+
+    SecondsTraversed=0;
+    iSetTimer(1000,second_counter);
+    iSetTimer(1000,komche_player1);
+    iSetTimer(1000,komche_player2);
+    iPauseTimer(1);
+    iPauseTimer(2);
+    player_mode=0;
+    srand(time(NULL));
+    init();
+    player_mode=1;
+    pic_x = 30;
+    pic_y = 20;
+    iInitialize(1400, 790, "Jaeherys I");
+    return 0;
+}

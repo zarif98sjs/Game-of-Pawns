@@ -1,0 +1,195 @@
+# depslib dependency file v1.0
+1531928386 source:e:\chess begins here\myigraphics\herechessbegan.cpp
+	"iGraphics.h"
+	"initializations.h"
+
+1493810122 e:\chess begins here\myigraphics\igraphics.h
+	<stdio.h>
+	<stdlib.h>
+	<gl/glut.h>
+	<time.h>
+	<math.h>
+	<windows.h>
+	<gl\glaux.h>
+
+1531928259 e:\chess begins here\myigraphics\initializations.h
+	<bits/stdc++.h>
+
+1531925480 e:\chess begins here\myigraphics\rook_001.h
+	"initializations.h"
+
+1531993869 source:d:\myigraphics\herechessbegan.cpp
+	"iGraphics.h"
+	"initializations.h"
+
+1493810122 d:\myigraphics\igraphics.h
+	<stdio.h>
+	<stdlib.h>
+	<gl/glut.h>
+	<time.h>
+	<math.h>
+	<windows.h>
+	<gl\glaux.h>
+
+1531994441 d:\myigraphics\initializations.h
+	<bits/stdc++.h>
+
+1532168378 source:d:\myigraphics fahim&zarif\herechessbegan.cpp
+	"iGraphics.h"
+	"initializations.h"
+
+1493810122 d:\myigraphics fahim&zarif\igraphics.h
+	<stdio.h>
+	<stdlib.h>
+	<gl/glut.h>
+	<time.h>
+	<math.h>
+	<windows.h>
+	<gl\glaux.h>
+
+1532167326 d:\myigraphics fahim&zarif\initializations.h
+	<bits/stdc++.h>
+
+1532267256 source:e:\chess term project\myigraphics fahim&zarif\herechessbegan.cpp
+	"iGraphics.h"
+	"initializations.h"
+
+1493810122 e:\chess term project\myigraphics fahim&zarif\igraphics.h
+	<stdio.h>
+	<stdlib.h>
+	<gl/glut.h>
+	<time.h>
+	<math.h>
+	<windows.h>
+	<gl\glaux.h>
+
+1532268062 e:\chess term project\myigraphics fahim&zarif\initializations.h
+	<bits/stdc++.h>
+
+1532945029 source:d:\myigraphics fahim_zarif up 23 07\herechessbegan.cpp
+	"iGraphics.h"
+	"initializations.h"
+	<windows.h>
+
+1532290497 d:\myigraphics fahim_zarif up 23 07\igraphics.h
+	<stdio.h>
+	<stdlib.h>
+	<gl/glut.h>
+	<time.h>
+	<math.h>
+	<windows.h>
+	<gl\glaux.h>
+
+1532944005 d:\myigraphics fahim_zarif up 23 07\initializations.h
+	<vector>
+	<algorithm>
+	<stdio.h>
+	<string.h>
+
+1532962989 source:e:\chess term project\myigraphics fahim_zarif up 23 07\herechessbegan.cpp
+	"iGraphics.h"
+	"initializations.h"
+	<windows.h>
+
+1532957628 e:\chess term project\myigraphics fahim_zarif up 23 07\igraphics.h
+	<stdio.h>
+	<stdlib.h>
+	<gl/glut.h>
+	<time.h>
+	<math.h>
+	<windows.h>
+	<gl\glaux.h>
+
+1532957628 e:\chess term project\myigraphics fahim_zarif up 23 07\initializations.h
+	<vector>
+	<algorithm>
+	<stdio.h>
+	<string.h>
+
+1533064131 source:e:\30-07-2018 (update)\herechessbegan.cpp
+	"iGraphics.h"
+	"initializations.h"
+	"blitz.h"
+	"artificial_hypocrisy.h"
+	<windows.h>
+
+1532970731 e:\30-07-2018 (update)\igraphics.h
+	<stdio.h>
+	<stdlib.h>
+	<gl/glut.h>
+	<time.h>
+	<math.h>
+	<windows.h>
+	<gl\glaux.h>
+
+1533029396 e:\30-07-2018 (update)\initializations.h
+	<vector>
+	<algorithm>
+	<stdio.h>
+	<string.h>
+
+1532972977 source:e:\30-07-2018 (update)\ar.c
+
+1533065094 e:\30-07-2018 (update)\blitz.h
+
+1533016136 e:\30-07-2018 (update)\artificial_hypocrisy.h
+
+1533065191 source:e:\30-07-2018 (update)\herechessis.cpp
+	"iGraphics.h"
+	"initializations.h"
+	"blitz.h"
+	"artificial_hypocrisy.h"
+	<windows.h>
+
+1533094588 source:e:\i review chess here\30-07-2018 (update)\herechessis.cpp
+	"iGraphics.h"
+	"initializations.h"
+	"blitz.h"
+	"artificial_hypocrisy.h"
+	<windows.h>
+
+1532970731 e:\i review chess here\30-07-2018 (update)\igraphics.h
+	<stdio.h>
+	<stdlib.h>
+	<gl/glut.h>
+	<time.h>
+	<math.h>
+	<windows.h>
+	<gl\glaux.h>
+
+1533092952 e:\i review chess here\30-07-2018 (update)\initializations.h
+	<vector>
+	<algorithm>
+	<stdio.h>
+	<string.h>
+
+1533065094 e:\i review chess here\30-07-2018 (update)\blitz.h
+
+1533016136 e:\i review chess here\30-07-2018 (update)\artificial_hypocrisy.h
+
+1539461722 source:d:\1705002 & 1705010\1705002 & 1705010\herechessis.cpp
+	"iGraphics.h"
+	"initializations.h"
+	"blitz.h"
+	"artificial_hypocrisy.h"
+	<windows.h>
+
+1532970732 d:\1705002 & 1705010\1705002 & 1705010\igraphics.h
+	<stdio.h>
+	<stdlib.h>
+	<gl/glut.h>
+	<time.h>
+	<math.h>
+	<windows.h>
+	<gl\glaux.h>
+
+1539461830 d:\1705002 & 1705010\1705002 & 1705010\initializations.h
+	<vector>
+	<algorithm>
+	<stdio.h>
+	<string.h>
+
+1539461925 d:\1705002 & 1705010\1705002 & 1705010\blitz.h
+
+1539461506 d:\1705002 & 1705010\1705002 & 1705010\artificial_hypocrisy.h
+
