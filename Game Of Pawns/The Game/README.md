@@ -1,15 +1,23 @@
-# Game-of-Pawns
+# Project
+Game of Pawns.<br>
 
-This is our Level 1 Term 1 project. We built a chess game "Game of Pawns". We used C++ for our project and also iGraphics library.
-Hope you like it.
+# Programming Language
+C++ accomapnied by iGraphics
 
-Note:
-You will find all the codes under the project file "CHESSBEGINSHEREatHOME" 
-To run the codes you have to install the iGraphics Library from "Install iGraphics" folder.
+# Feature
+
+# Screenshot
+
+# How to use
+You will find all the codes under the project file "CHESSBEGINSHEREatHOME" <br>
+To run the codes you have to install the iGraphics Library from "Install iGraphics" folder. <br>
 Or you can simply run the game from "MyIGraphics.exe" file adjusting your screen resolution accordingly.
 
-Best Regards,
-Sheikh Azizul Hakim (1705002)
-Md.Zarif Ul Alam (1705010)
+# Project Team
+* Sheikh Azizul Hakim ; ID - 1705002
+* Md. Zarif Ul Alam   ; ID - 1705010
 
 Computer Science & Engineering Department , BUET
+
+# Project Supervisor 
+* [Mehnaz Tabassum Mahin](https://cse.buet.ac.bd/faculty_list/detail/mehnaztabassum)
