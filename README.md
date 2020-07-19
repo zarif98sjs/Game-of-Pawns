@@ -1,14 +1,14 @@
 # Project
-Game of Pawns.<br>
+***Game of Pawns***  
 
 # Programming Language
-C++ accomapnied by iGraphics
+***C++*** accomapnied by *iGraphics*
 
 # Feature
-3 Modes are available for the chess game:
-* Uno (Player vs PC , We developed a custom chess engine for this purpose)
-* Duo (Player vs Player)
-* Blitz (Player vs Player , 5 minutes each)
+3 Modes are available for the Chess game:
+* *Uno* (Player vs PC , We developed a custom chess engine for this purpose)
+* *Duo* (Player vs Player)
+* *Blitz* (Player vs Player , 5 minutes each)
 
 # Screenshot
 
